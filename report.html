@@ -1,3 +1,5 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
   <head>
 <style type="text/css">
@@ -61,24 +63,76 @@
   color: #BC5A65;
   font-weight: bold;
 }
-</style><title>OpenAPI version 0.6</title></head>
+</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>OpenAPI version 0.6</title>
+    <meta name="author" content="Ashley Noel Hinton, Paul Murrell">
+    <meta name="description" content="Technical report on version 0.6 of the OpenAPI architecture">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  
   <body>
-    <h1 class="title">OpenAPI version 0.6</h1>
-    <span class="author">Ashley Noel Hinton and Paul
-    Murrell</span><br>
-    <span class="date">date</span><br>
 
-    <p>The OpenAPI architecture specifies a method for sharing and
-      combining pieces of data analysis code so as to help people
-      connect with data. OpenAPI describes how pieces of data analysis
-      code can be wrapped in modules, and how these modules can be
-      combined in pipelines which describe a whole data analysis
-      workflow.  Modules and pipelines are created using simple XML,
-      and are intended to promote sharing and re-use. Modules and
-      pipelines can be executed in OpenAPI glue system software (.</p>
+    
+    <div class="title">
+      <h1>OpenAPI version 0.6</h1>
+      <div class="author">
+	<p>Ashley Noel Hinton<br>
+	  <span class="author-email"><a href="mailto:ahin017@aucklanduni.ac.nz">ahin017@aucklanduni.ac.nz</a></span>
+	</p>
+	<p>Paul Murrell<br>
+	  <span class="author-email"><a href="mailto:paul@stat.auckland.ac.nz">paul@stat.auckland.ac.nz</a></span>
+	</p>
+	<p class="affiliation">Department of Statistics, University of
+	  Auckland</p>
+      </div>
+      <p class="date">June 2016</p>
+    </div>
 
-    <p>This report describes the changes to the OpenAPI architecture
-      in version 0.6.</p>
+    <div id="introduction">
+      <p>The OpenAPI architecture specifies a method for sharing and
+	combining pieces of data analysis code so as to help people
+	connect with data. OpenAPI describes how pieces of data
+	analysis code can be wrapped in modules, and how these modules
+	can be combined in pipelines which describe a whole data
+	analysis workflow.  Modules and pipelines are created using
+	simple XML, and are intended to promote sharing and
+	re-use. Modules and pipelines can be executed in OpenAPI glue
+	system software	(
+	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2015-01-introducing-openapi/">Introducing OpenAPI</a>,
+	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">version 0.3</a>,
+	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">version 0.5</a>).
+      </p>
+
+      <p>This report describes the changes to the OpenAPI architecture
+	in version 0.6. Module host elements were implemented in
+	OpenAPI version 0.5; version 0.6 has extended module hosts so
+	it is possible to provide a module's host information through
+	a module input. The way a module author specifies a module's
+	language has also been changed in version 0.6, with the
+	introduction of the <code>language</code> element. This
+	element also allows the author to specify details of the
+	version of the language required.</p>
+
+      <p>The changes described in this report have been implemented in
+	<a href="https://github.com/anhinton/conduit/releases/tag/v0.6">
+	Conduit version 0.6</a>. Conduit is a protoype OpenAPI glue
+	system implemented as an R package. Further etails of hanges
+	to Conduit v0.6 are provided at the end of this report.</p>
+    </div>
+
+    <h2>Passing module host information through a module input</h2>
+
+    <p>Module host elements were introduced in OpenAPI v0.5 to provide a
+      method for meeting module source script dependencies
+      (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">OpenAPI v0.5</a>).
+      
+      </p>
+
+    <h2>Specifying module language version details</h2>
+
+    <h2>Changes in Conduit version 0.6</h2>
 
   </body>
 </html>
