@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<module xmlns="http://www.openapi.org/2014/">
+  <language>python2</language>
+  <host>
+    <moduleInput name="vagrantMachine.xml"/>
+  </host>
+  <description>generate list of 10 numbers from norm(0,1)</description>
+  <input name="vagrantMachine.xml">
+    <file ref="vagrantMachine.xml"/>
+    <format formatType="text">XML file</format>
+  </input>
+  <source>
+    <script><![CDATA[#! /usr/bin/python2
+import random
+
+## generate list of 10 from norm(0,1)
+x = [0] * 10
+for i in range(len(x)):
+    x[i] = random.gauss(0, 1)]]></script>
+  </source>
+  <output name="x">
+    <internal symbol="x"/>
+    <format formatType="text">python list</format>
+  </output>
+</module>

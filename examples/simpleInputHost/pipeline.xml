@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<pipeline xmlns="http://www.openapi.org/2014/">
+  <description>demonstrate use of &lt;host&gt;&lt;moduleInput/&gt;&lt;/host&gt;</description>
+  <component name="createVagrant" type="module">
+    <file ref="createVagrant.xml"/>
+  </component>
+  <component name="normalList" type="module">
+    <file ref="normalList.xml"/>
+  </component>
+  <pipe>
+    <start component="createVagrant" output="vagrantMachine.xml"/>
+    <end component="normalList" input="vagrantMachine.xml"/>
+  </pipe>
+</pipeline>
