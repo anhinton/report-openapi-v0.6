@@ -13,7 +13,7 @@
   <body>
     <!--begin.rcode setup, echo=FALSE, message=FALSE
 	library(knitr)
-	opts_chunk$set(cache=TRUE, tidy=TRUE)
+	opts_chunk$set(cache=TRUE)
         library(conduit)
 	end.rcode-->
     
@@ -117,14 +117,73 @@
       <code>vagrant</code> host machine as introduced in OpenAPI
       v0.5.</p>
 
-    <!--begin.rcode simpleInputHost, cache.rebuild=TRUE
+    <p>The simpleInputHost pipeline example demonstrates how a module
+      host can be passed into a module as an input. The pipeline
+      contains two modules&mdash;&lsquo;createVagrant&rsquo; and
+      &lsquo;normalList&rsquo;. A pipe connects the output
+      &lsquo;vagrantMachine.xml&rsquo; to an input of the same name in
+      &lsquo;normalList&rsquo;. The XML code for
+      <a href="examples/simpleInputHost/pipeline.xml">simpleInputHost/pipeline.xml</a>
+      follows:</p>
+    
+<!--begin.rcode simpleInputHost_pipeline_xml, echo = FALSE, comment = NA
+cat(readLines("examples/simpleInputHost/pipeline.xml"), sep = "\n")
+end.rcode-->
+
+    <p>The &lsquo;createVagrant&rsquo; module wraps a bash script,
+      which creates a Vagrantfile on the local machine, and starts the
+      vagrant machine. The script creates an XML file,
+      &lsquo;vagrantMachine.xml&rsquo;, containing
+      OpenAPI <code>docker</code> host XML. The module returns the
+      &lsquo;vagrantMachine.xml&rsquo; as an <code>output</code>. The
+      XML code for
+      <a href="examples/simpleInputHost/createVagrant.xml">createVagrant.xml</a>
+      follows:</p>
+
+<!--begin.rcode createVagrant_xml, echo = FALSE, comment = NA
+cat(readLines("examples/simpleInputHost/createVagrant.xml"), sep = "\n")
+end.rcode-->
+
+    <p>The &lsquo;normalList&rsquo; module wraps a python2 script. The
+    module has a <code>moduleInput</code> <code>host</code>, which
+    names the input &lsquo;vagrantMachine.xml&rsquo;. The module has
+    one <code>input</code>, &lsquo;vagrantMachine.xml&rsquo;. The
+    script will be executed on the host machine passed in by this
+    input. The scritpt produces a list of random numbers, which is
+    returned as <code>output</code> &lsquo;x&rsquo;. The XML code for
+    <a href="examples/simpleInputHost/normalList.xml">normalList.xml</a>
+    follows:</p>
+
+<!--begin.rcode normalList_xml, echo = FALSE, comment = NA
+cat(readLines("examples/simpleInputHost/normalList.xml"), sep = "\n")
+end.rcode-->
+
+    <p>When this pipeline is executed in an OpenAPI glue system the
+    glue system will execute the &lsquo;normalList&rsquo; on the host
+    machine created by &lsquo;createVagrant&rsquo;, even if this
+    machine did not exist when the pipeline was loaded. This pipeline
+    can be executed in Conduit on a machine with Vagrant installed
+    with the following code. Please note that executing the
+    &lsquo;createVagrant&rsquo; module will create and start a new
+    vagrant machine in the directory
+    &lsquo;<code>~/vagrant/precise32</code>&rsquo; on the machine
+    running Conduit. If this directory does not exist it will be
+    created. If the &lsquo;hashicorp/precise32&rsquo; Vagrant box has
+    not been downloaded to your machine it will be downloaded
+    first. The vagrant machine will not be halted by this pipeline,
+    and should be halted manually from
+    &lsquo;<code>~/vagrant/precise32</code>&rsquo;.</p>
+
+<!--begin.rcode simpleInputHost, cache.rebuild = FALSE
 simpleInputHost <- loadPipeline(
     name = "simpleInputHost",
     ref = file.path("examples", "simpleInputHost", "pipeline.xml"))
 
 result1 <- runPipeline(pipeline = simpleInputHost)
-export(result1)
+result1Tarball <- export(result1)
 end.rcode-->
+
+    <p></p>
 
     <h2>Specifying module language version details</h2>
 
