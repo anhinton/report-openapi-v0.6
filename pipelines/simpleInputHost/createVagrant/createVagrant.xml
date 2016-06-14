@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<module xmlns="http://www.openapi.org/2014/">
+  <language version="4.3.42(1)-release">bash</language>
+  <description>create a vagrant machine and spin it up</description>
+  <input name="vagrantMachine.xml">
+    <file ref="vagrantMachine.xml"/>
+    <format formatType="text">XML File</format>
+  </input>
+  <output name="vagrantMachine.xml">
+    <file ref="vagrantMachine.xml"/>
+    <format formatType="text">XML File</format>
+  </output>
+</module>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<module xmlns="http://www.openapi.org/2014/">
+  <language version="2.7.3">python2</language>
+  <description>generate list of 10 numbers from norm(0,1)</description>
+  <input name="x">
+    <file ref="x.pickle"/>
+    <format formatType="text">python list</format>
+  </input>
+  <source>
+    <script><![CDATA[with open('x.pickle', 'rb') as f:
+    x = pickle.load(f)]]></script>
+  </source>
+  <output name="x">
+    <internal symbol="x"/>
+    <format formatType="text">python list</format>
+  </output>
+</module>
