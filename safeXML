@@ -1,0 +1,6 @@
+&lt;!-- -*text*- --&gt;
+
+&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;

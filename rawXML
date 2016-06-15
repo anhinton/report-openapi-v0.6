@@ -1,0 +1,6 @@
+<!-- -*-xml-*- -->
+
+<module xmlns="http://www.openapi.org/2014/">
+  <language>python</language>
+  ...
+</module>
