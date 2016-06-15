@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<module xmlns="http://www.openapi.org/2014/">
+  <language version="2.14.1">R</language>
+  <source>
+    <script><![CDATA[### create a list of things
+listOfThings <- list(
+    one = rnorm(n = 100),
+    two = LETTERS,
+    three = iris,
+    four = outer(1:12, 1:12))
+]]></script>
+  </source>
+  <output name="listOfThings">
+    <internal symbol="listOfThings"/>
+    <format formatType="text">R list object</format>
+  </output>
+</module>
