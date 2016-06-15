@@ -13,8 +13,8 @@
   <body>
     <!--begin.rcode setup, echo=FALSE, message=FALSE
 	library(knitr)
-	opts_chunk$set(cache=TRUE)
-        library(conduit)
+	opts_chunk$set(cache=TRUE, tidy = TRUE)
+	library(conduit)
 	end.rcode-->
     
     <div class="title">
@@ -26,7 +26,7 @@
 	<p>Paul Murrell<br>
 	  <span class="author-email"><a href="mailto:paul@stat.auckland.ac.nz">paul@stat.auckland.ac.nz</a></span>
 	</p>
-	<p class="affiliation">Department of Statistics, University of
+	<p class="affiliation">Department of Statistics, The University of
 	  Auckland</p>
       </div>
       <p class="date">June 2016</p>
@@ -41,8 +41,8 @@
 	analysis workflow.  Modules and pipelines are created using
 	simple XML, and are intended to promote sharing and
 	re-use. Modules and pipelines can be executed in OpenAPI glue
-	system software	(
-	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2015-01-introducing-openapi/">Introducing OpenAPI</a>,
+	system software
+	(<a href="http://stattech.wordpress.fos.auckland.ac.nz/2015-01-introducing-openapi/">Introducing OpenAPI</a>,
 	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">version 0.3</a>,
 	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">version 0.5</a>).
       </p>
@@ -68,16 +68,16 @@
 
     <p>Module host elements were introduced in OpenAPI v0.5 to provide
       a method for meeting module source script dependencies
-      (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">OpenAPI
-      v0.5</a>).  One of the limitations of using
-      the <code>docker</code> or <code>vagrant</code> host elements
-      described in OpenAPI v0.5 was that a module author was assuming
-      the host machine described had been created and was available
-      for use when a module is executed. Module host elements were
-      static, meaning module authors had no way of creating a custom
-      host machine as part of an OpenAPI pipeline. Anyone wishing to
-      run a module which required a host machine was also responsible
-      for ensuring this host machine was ready to be accessed.</p>
+      (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">OpenAPI version 0.5</a>).
+      One of the limitations of using the <code>docker</code>
+      or <code>vagrant</code> host elements described in OpenAPI v0.5
+      was that a module author was assuming the host machine described
+      had been created and was available for use when a module is
+      executed. Module host elements were static, meaning module
+      authors had no way of creating a custom host machine as part of
+      an OpenAPI pipeline. Anyone wishing to run a module which
+      required a host machine was also responsible for ensuring this
+      host machine was ready to be accessed.</p>
 
     <p>OpenAPI version 0.6 introduces
       the <code>moduleInput</code> element to the list of elements
@@ -126,9 +126,9 @@
       <a href="examples/simpleInputHost/pipeline.xml">simpleInputHost/pipeline.xml</a>
       follows:</p>
     
-<!--begin.rcode simpleInputHost_pipeline_xml, echo = FALSE, comment = NA
-cat(readLines("examples/simpleInputHost/pipeline.xml"), sep = "\n")
-end.rcode-->
+    <!--begin.rcode simpleInputHost_pipeline_xml, echo = FALSE, comment = NA
+	cat(readLines("examples/simpleInputHost/pipeline.xml"), sep = "\n")
+	end.rcode-->
 
     <p>The &lsquo;createVagrant&rsquo; module wraps a bash script,
       which creates a Vagrantfile on the local machine, and starts the
@@ -140,9 +140,9 @@ end.rcode-->
       <a href="examples/simpleInputHost/createVagrant.xml">createVagrant.xml</a>
       follows:</p>
 
-<!--begin.rcode createVagrant_xml, echo = FALSE, comment = NA
-cat(readLines("examples/simpleInputHost/createVagrant.xml"), sep = "\n")
-end.rcode-->
+    <!--begin.rcode createVagrant_xml, echo = FALSE, comment = NA
+	cat(readLines("examples/simpleInputHost/createVagrant.xml"), sep = "\n")
+	end.rcode-->
 
     <p>The &lsquo;normalList&rsquo; module wraps a python2 script. The
     module has a <code>moduleInput</code> <code>host</code>, which
@@ -154,9 +154,9 @@ end.rcode-->
     <a href="examples/simpleInputHost/normalList.xml">normalList.xml</a>
     follows:</p>
 
-<!--begin.rcode normalList_xml, echo = FALSE, comment = NA
-cat(readLines("examples/simpleInputHost/normalList.xml"), sep = "\n")
-end.rcode-->
+    <!--begin.rcode normalList_xml, echo = FALSE, comment = NA
+	cat(readLines("examples/simpleInputHost/normalList.xml"), sep = "\n")
+	end.rcode-->
 
     <p>When this pipeline is executed in an OpenAPI glue system the
     glue system will execute the &lsquo;normalList&rsquo; on the host
@@ -174,20 +174,165 @@ end.rcode-->
     and should be halted manually from
     &lsquo;<code>~/vagrant/precise32</code>&rsquo;.</p>
 
-<!--begin.rcode simpleInputHost, cache.rebuild = FALSE
-simpleInputHost <- loadPipeline(
-    name = "simpleInputHost",
-    ref = file.path("examples", "simpleInputHost", "pipeline.xml"))
+    <!--begin.rcode simpleInputHost, cache.rebuild = FALSE
+	simpleInputHost <- loadPipeline(
+	name = "simpleInputHost",
+	ref = file.path("examples", "simpleInputHost", "pipeline.xml"))
 
-result1 <- runPipeline(pipeline = simpleInputHost)
-result1Tarball <- export(result1)
-end.rcode-->
+	result1 <- runPipeline(pipeline = simpleInputHost)
+	result1Tarball <- export(result1)
+	end.rcode-->
 
-    <p></p>
+    <p>The result of running &lsquo;simpleInputHost&rsquo; can be found
+    at <a href="simpleInputHost.tar.gz">simpleInputHost.tar.gz</a>.</p>
 
     <h2>Specifying module language version details</h2>
 
+    <p>In OpenAPI v0.3 the &lsquo;language&rsquo; attribute was added
+      to <code>module</code> elements with which a module author
+      specified the language of execution for a module's source
+      scripts
+      (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">OpenAPI version 0.3</a>).
+      In OpenAPI v0.6 this attribute has been
+      replaced with a <code>language</code> element. OpenAPI v0.6 also
+      introduces attributes to the <code>language</code> element for
+      specifying the language version required to execute a module's
+      source scripts.</p>
+
+    <p>Each OpenAPI <code>module</code> must contain
+      a <code>language</code> element as its first element. The value of the
+      <code>language</code> element should be the language with which
+      an OpenAPI glue system will execute the module's source
+      scripts. The following code demonstrates how a module author
+      indicates a module should be executed using the
+      &ldquo;python&rdquo; language:</p>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;</code></pre>
+
+    <p>A module author can now also specify the minimum and maximum
+    version of the language required using either or both the
+    &lsquo;minVersion&rsquo; and the &lsquo;maxVersion&rsquo;
+    attributes. These attributes should be provided with a version
+    number string appropriate to the language named. The following
+    code demonstrates how a module author can specify that a version of the
+    &ldquo;R&rdquo; language between versions &ldquo;2.14.1&rdquo; and
+    &ldquo;3.0.2&rdquo; should be used:</p>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language minVersion="2.14.1" maxVersion="3.0.2"&gt;R&lt;/language&gt;
+  ...
+&lt;/module&gt;</code></pre>
+
+    <p>If a module author instead requires an exact version of a
+    language for script exection she can specify this using the new
+    &lsquo;version&rsquo; attribute of the <code>language</code>
+    element. The &lsquo;version&rsquo; attribute should be provided
+    with a version number string appropriate to the language
+    named. The following code demonstrates how a module author can
+    specify that version &ldquo;3.5.1+&rdquo; of the
+    &ldquo;python&rdquo; language should be used:</p>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language version="3.5.1+"&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;</code></pre>
+
+    <h3>Supporting language versions in OpenAPI glue systems</h3>
+
+    <p>While OpenAPI version 0.6 has introduced the ability to specify
+    the version of a language used to execute a module's source
+    scripts, it is not a requirement of OpenAPI v0.6 that a glue
+    system must respect such specifications. Rather it is intended
+    that module language version information provide a glue system
+    user with a means for debugging problematic module execution. For
+    example, a glue system may provide an option to warn a module user
+    when version requirements are not met. Language version attributes
+    may also serve as a means for recording the actual version of a
+    language used when creating module and pipeline result
+    objects. This could provide useful information about how certain
+    module and pipeline results were achieved, which could aid in the
+    reproducibility of a module or pipeline.</p>
+
+    <p>The next section includes a description of how Conduit version
+    0.6 has implemented module language version information.</p>
+    
     <h2>Changes in Conduit version 0.6</h2>
 
+    <p>Conduit is a prototype OpenAPI glue system implemented as an R
+    package.  <a
+    href="https://github.com/anhinton/conduit/releases/tag/v0.6">Conduit
+    version 0.6</a> implements the changes to OpenAPI v0.6 described
+    in this report. This section describes how <code>module</code>
+    <code>language</code> elements have been implemented in Conduit
+    v0.6 to optionally provide a warning to the user when the language
+    used to execute a module does not meet the author's
+    requirements. Conduit will also record the exact version of a
+    language used for module execution in its persistent module
+    results. Finally, language version information has been used to
+    determine which of the two commonly installed version of the
+    &ldquo;python&rdquo; language is to be used for module
+    execuction.</p>
+
+    <h3>Warning about language version violation</h3>
+
+    <p>In Conduit version 0.6 a new argument, <code>warnVersion</code>
+      has been added to the <code>runModule()</code> function, used to
+      execute a module. When this argument is passed the default value
+      of <code>FALSE</code> the module will not behave any differently
+      than in previouse versions. However,
+      when <code>warnVersion</code> is set to <code>FALSE</code>
+      Conduit will give a warning if any of a module's language
+      version attributes are violated.</p>
+
+    <p>The &ldsquo;listOfThings&rsquo; specifies that it is to be
+    executed using version &ldquo;2.14.1&rdquo; of the &ldquo;R&rdquo;
+    language. The XML code
+    for <a href="examples/warnVersion/listOfThings.xml">listOfThings.xml</a>
+    follows:</p>
+
+    <!--begin.rcodelistOfThings_module, echo = FALSE, comment = NA
+	cat(readLines(file.path("examples",
+        "warnVersion",
+        "listOfThings.xml")), sep = "\n")
+	end.rcode-->
+
+    <p>If this module is executed in a version or R other than 2.14.1
+      Conduit will give a warning. The following demonstrates the
+      &lsquo;listOfThings&rsquo; module being executed in R
+      version <!--rinline getRversion() -->:</p>
+
+    <!--begin.rcode warnVersionTrue
+	listOfThings <- loadModule(
+	name = "listOfThings",
+	ref = file.path("examples", "warnVersion", "listOfThings.xml"))
+	result2 <- runModule(module = listOfThings, targetDirectory = tempdir(),
+        warnVersion = TRUE)
+	result2tarball <- export(result2)
+	end.rcode-->
+
+    <p>The result of running &lsquo;listOfThings&rsquo; can be found
+    at <a href="listOfThings.tar.gz">listOfThings.tar.gz</a>.</p>
+
+    <h3>Recording language version used for execution</h3>
+
+    <p>Persistent result formats for modules were introduced
+    in <a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">OpenAPI
+    version 0.5</a>. In Conduit v0.6 the exact version of the language
+    used to execute a module's source scripts is stored in the module
+    result created. Information on the language used to execute the
+    &lsquo;listOfThings&rsquo; example above can be seen with the
+    following R code:</p>
+
+    <!--begin.rcode execLanguageVersion
+	cat(paste0("Language: '", result2$component$language$language, "'"),
+	paste0("Version: '", result2$component$language$version, "'"), sep = "\n")
+	end.rcode-->
+
+    <h3>Using language version to choose major &ldquo;python&rdquo;
+    version</h3>
+    
   </body>
 </html>
