@@ -4,3 +4,13 @@
   <language>python</language>
   ...
 </module>
+
+<module xmlns="http://www.openapi.org/2014/">
+  <language minVersion="2.14.1" maxVersion="3.0.2">R</language>
+  ...
+</module>
+
+<module xmlns="http://www.openapi.org/2014/">
+  <language version="3.5.1+">python</language>
+  ...
+</module>
