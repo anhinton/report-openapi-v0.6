@@ -14,3 +14,29 @@
   &lt;language version="3.5.1+"&gt;python&lt;/language&gt;
   ...
 &lt;/module&gt;
+
+&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;
+
+&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python3&lt;/language&gt;
+  ...
+&lt;/module&gt;
+
+&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python2&lt;/language&gt;
+  ...
+&lt;/module&gt;
+
+&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language maxVersion="2.8"&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;
+
+&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language version="2.7.11+"&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;
+

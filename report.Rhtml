@@ -43,8 +43,8 @@
 	re-use. Modules and pipelines can be executed in OpenAPI glue
 	system software
 	(<a href="http://stattech.wordpress.fos.auckland.ac.nz/2015-01-introducing-openapi/">Introducing OpenAPI</a>,
-	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">version 0.3</a>,
-	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">version 0.5</a>).
+	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">OpenAPI version 0.3</a>,
+	<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">OpenAPI version 0.5</a>).
       </p>
 
       <p>This report describes the changes to the OpenAPI architecture
@@ -105,15 +105,16 @@
 &lt;/module></code></pre>
 
     <p>The <code>moduleInput</code> element contains a
-      &lsquo;name&rsquo; attribute, which the module author uses to
+      <code>name</code> attribute, which the module author uses to
       name the input which will provide the host machine XML. In the above
       code the &ldquo;hostMachine&rdquo; input is named&mdash;note the
-      <code>moduleInput</code> name attribute must match exactly the
-      name of one of the module's <code>input</code> names. When this
-      module, is executed the glue system reads the details of the
-      host machine described in &ldquo;hostMachine.xml&rdquo; and
-      executes the module on this host machine. This XML document should
-      contain only XML to describe a <code>docker</code> or
+      <code>moduleInput</code> <code>name</code> attribute must match
+      exactly the name of one of the module's <code>input</code>
+      names. When this module, is executed the glue system reads the
+      details of the host machine described in
+      &ldquo;hostMachine.xml&rdquo; and executes the module on this
+      host machine. This XML document should contain only XML to
+      describe a <code>docker</code> or
       <code>vagrant</code> host machine as introduced in OpenAPI
       v0.5.</p>
 
@@ -144,9 +145,10 @@
 	cat(readLines("examples/simpleInputHost/createVagrant.xml"), sep = "\n")
 	end.rcode-->
 
-    <p>The &lsquo;normalList&rsquo; module wraps a python2 script. The
-    module has a <code>moduleInput</code> <code>host</code>, which
-    names the input &lsquo;vagrantMachine.xml&rsquo;. The module has
+    <p>The &lsquo;normalList&rsquo; module wraps a
+    &ldquo;python2&rdquo; script. The module has
+    a <code>moduleInput</code> <code>host</code>, which names the
+    input &lsquo;vagrantMachine.xml&rsquo;. The module has
     one <code>input</code>, &lsquo;vagrantMachine.xml&rsquo;. The
     script will be executed on the host machine passed in by this
     input. The scritpt produces a list of random numbers, which is
@@ -188,12 +190,12 @@
 
     <h2>Specifying module language version details</h2>
 
-    <p>In OpenAPI v0.3 the &lsquo;language&rsquo; attribute was added
+    <p>In OpenAPI v0.3 the <code>language</code> attribute was added
       to <code>module</code> elements with which a module author
       specified the language of execution for a module's source
       scripts
-      (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">OpenAPI version 0.3</a>).
-      In OpenAPI v0.6 this attribute has been
+      (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">OpenAPI
+      version 0.3</a>).  In OpenAPI v0.6 this attribute has been
       replaced with a <code>language</code> element. OpenAPI v0.6 also
       introduces attributes to the <code>language</code> element for
       specifying the language version required to execute a module's
@@ -214,7 +216,7 @@
 
     <p>A module author can now also specify the minimum and maximum
     version of the language required using either or both the
-    &lsquo;minVersion&rsquo; and the &lsquo;maxVersion&rsquo;
+    <code>minVersion</code> and the <code>maxVersion</code>
     attributes. These attributes should be provided with a version
     number string appropriate to the language named. The following
     code demonstrates how a module author can specify that a version of the
@@ -228,8 +230,8 @@
 
     <p>If a module author instead requires an exact version of a
     language for script exection she can specify this using the new
-    &lsquo;version&rsquo; attribute of the <code>language</code>
-    element. The &lsquo;version&rsquo; attribute should be provided
+    <code>version</code> attribute of the <code>language</code>
+    element. The <code>version</code> attribute should be provided
     with a version number string appropriate to the language
     named. The following code demonstrates how a module author can
     specify that version &ldquo;3.5.1+&rdquo; of the
@@ -279,17 +281,16 @@
     <h3>Warning about language version violation</h3>
 
     <p>In Conduit version 0.6 a new argument, <code>warnVersion</code>
-      has been added to the <code>runModule()</code> function, used to
-      execute a module. When this argument is passed the default value
-      of <code>FALSE</code> the module will not behave any differently
-      than in previouse versions. However,
-      when <code>warnVersion</code> is set to <code>FALSE</code>
-      Conduit will give a warning if any of a module's language
-      version attributes are violated.</p>
+    has been added to the <code>runModule()</code> function, used to
+    execute a module. When this argument is passed the default value
+    of <code>FALSE</code> the module will not behave any differently
+    than in previouse versions. However, when <code>warnVersion</code>
+    is set to <code>FALSE</code> Conduit will give a warning if any of
+    a module's language version attributes are violated.</p>
 
-    <p>The &ldsquo;listOfThings&rsquo; specifies that it is to be
-    executed using version &ldquo;2.14.1&rdquo; of the &ldquo;R&rdquo;
-    language. The XML code
+    <p>The &lsquo;listOfThings&rsquo; module specifies that it is to
+    be executed using version &ldquo;2.14.1&rdquo; of the
+    &ldquo;R&rdquo; language. The XML code
     for <a href="examples/warnVersion/listOfThings.xml">listOfThings.xml</a>
     follows:</p>
 
@@ -299,10 +300,10 @@
         "listOfThings.xml")), sep = "\n")
 	end.rcode-->
 
-    <p>If this module is executed in a version or R other than 2.14.1
+    <p>If this module is executed in a version of R other than 2.14.1
       Conduit will give a warning. The following demonstrates the
-      &lsquo;listOfThings&rsquo; module being executed in R
-      version <!--rinline getRversion() -->:</p>
+      &lsquo;listOfThings&rsquo; module being executed in an R version
+      other than 2.14.1:</p>
 
     <!--begin.rcode warnVersionTrue
 	listOfThings <- loadModule(
@@ -331,8 +332,88 @@
 	paste0("Version: '", result2$component$language$version, "'"), sep = "\n")
 	end.rcode-->
 
-    <h3>Using language version to choose major &ldquo;python&rdquo;
-    version</h3>
+    <h3>Using language version to choose major Python version</h3>
+
+    <p>There are currently two major versions of Python in common use,
+    Python versions 2.7.11 and 3.5.1 being the most recent stable
+    releases. The Python Software Foundation says &ldquo;Python 3.x is
+    the present and future of the language&rdquo;
+    (<a href="https://wiki.python.org/moin/Python2orPython3">Should I
+    use Python 2 or Python 3 for my development
+    activity?</a>). However, many common software libraries only
+    support Python 2, and the 2.7 release of Python will receive
+    security and bug fixes from the core development team until 2020
+    (<a href="https://www.python.org/dev/peps/pep-0373/">PEP 373 --
+    Python 2.7 Release Schedule</a>).</p>
+
+    <p>Previous versions of Conduit used the system
+    command <code>/usr/bin/python</code> to execute the source scripts
+    of &ldquo;python&rdquo;-language modules. On many Linux systems
+    this meant that Python v2.x would be used. From version 0.6
+    Conduit will try to execute any module which specifies
+    &ldquo;python&rdquo; as its language using Python v3.x via the
+    system command <code>/usr/bin/python3</code>. Versions 2.x and 3.x
+    of Python can be invoked by providing &ldquo;python2&rdquo; and
+    &ldquo;python3&rdquo; respectiveyl as a module's language.</p>
+
+    <p>In Conduit v0.6 the following two module XML examples will be
+      executed using Python v3.x:</p>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;</code></pre>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python3&lt;/language&gt;
+  ...
+&lt;/module&gt;</pre></code>
+
+    <p>If a module author wishes to execute a module's source scripts
+    using Python v2.x she can specify the &ldquo;python2&rdquo;
+    language as in the following module XML:</p>
+    
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language&gt;python2&lt;/language&gt;
+  ...
+&lt;/module&gt;</pre></code>
+
+    <p>The introduction of module language version attributes allows
+    another mechanism for controlling the version of Python used to
+    executed module source scripts. If a module author specifies that
+    a module's scripts should be executed using the
+    &ldquo;python&rdquo; language with a <code>maxVersion</code> less
+    than version &ldquo;3.0.0&rdquo; Conduit v0.6 will execute these
+    scripts as if the author has specified &ldquo;python2&rdquo; as
+    the module language. The following module XML will be executed
+    using Python v2.x in Conduit v0.6:</p>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language maxVersion="2.8"&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;</code></pre>
+
+    <p>Similarly, if a module author specifies a module requires an
+    exact version of &ldquo;python&rdquo; less then version
+    &ldquo;3.0.0&rdquo; using the <code>version</code> attribute
+    Conduit v0.6 will execute this module's scripts as if
+    &ldquo;python2&rdquo; had been specified. This will occur even if
+    the version of Python v2.x used by Conduit does not
+    match <code>version</code> exactly. The following module XML will
+    be executed using Python v2.x in Conduit v0.6:</p>
+
+    <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
+  &lt;language version="2.7.11+"&gt;python&lt;/language&gt;
+  ...
+&lt;/module&gt;</code></pre>
+
+    <p>While Conduit v0.6 will select a Python version for execution
+    in the way described above, it necessarily depends on there being
+    Python executables at <code>/usr/bin/python2</code>
+    and <code>/usr/bin/python3</code>. Most Linux distributions
+    provide a method to install Python version 2.x and 3.x from their
+    software repositories, and mayne install one of both by
+    default.</p>
     
   </body>
 </html>
