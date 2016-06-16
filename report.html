@@ -117,8 +117,8 @@
 
       <p>The changes described in this report have been implemented in
 	<a href="https://github.com/anhinton/conduit/releases/tag/v0.6">
-	Conduit version 0.6</a>. Conduit is a protoype OpenAPI glue
-	system implemented as an R package. Further etails of changes
+	Conduit version 0.6</a>. Conduit is a prototype OpenAPI glue
+	system implemented as an R package. Further details of changes
 	to Conduit v0.6 are provided at the end of this report.</p>
     </div>
 
@@ -137,12 +137,12 @@
       required a host machine was also responsible for ensuring this
       host machine was ready to be accessed.</p>
 
-    <p>OpenAPI version 0.6 introduces
-      the <code>moduleInput</code> element to the list of elements
-      available inside a module <code>host</code>
-      element. Unlike <code>docker</code> or <code>vagrant</code> host
-      elements, the <code>moduleHost</code> element indicates that the
-      module's host is to be provided in one of the module's
+    <p>OpenAPI version 0.6 introduces the <code>moduleInput</code>
+      element to the list of elements available inside a
+      module <code>host</code> element. Unlike <code>docker</code>
+      or <code>vagrant</code> host elements,
+      the <code>moduleInput</code> element indicates that the module's
+      host is to be provided in one of the module's
       <code>input</code> elements. This allows a module author to
       create a module host machine and reference it in the output of a
       module. A pipeline can then pass this output to a module waiting
@@ -168,7 +168,7 @@
       code the &ldquo;hostMachine&rdquo; input is named&mdash;note the
       <code>moduleInput</code> <code>name</code> attribute must match
       exactly the name of one of the module's <code>input</code>
-      names. When this module, is executed the glue system reads the
+      names. When this module is executed the glue system reads the
       details of the host machine described in
       &ldquo;hostMachine.xml&rdquo; and executes the module on this
       host machine. This XML document should contain only XML to
@@ -176,10 +176,10 @@
       <code>vagrant</code> host machine as introduced in OpenAPI
       v0.5.</p>
 
-    <p>The simpleInputHost pipeline example demonstrates how a module
-      host can be passed into a module as an input. The pipeline
-      contains two modules&mdash;&lsquo;createVagrant&rsquo; and
-      &lsquo;normalList&rsquo;. A pipe connects the output
+    <p>The &lsquo;simpleInputHost&rsquo; pipeline example demonstrates
+      how a module host can be passed into a module as an input. The
+      pipeline contains two modules&mdash;&lsquo;createVagrant&rsquo;
+      and &lsquo;normalList&rsquo;. A pipe connects the output
       &lsquo;vagrantMachine.xml&rsquo; to an input of the same name in
       &lsquo;normalList&rsquo;. The XML code for
       <a href="examples/simpleInputHost/pipeline.xml">simpleInputHost/pipeline.xml</a>
@@ -206,7 +206,7 @@
       which creates a Vagrantfile on the local machine, and starts the
       vagrant machine. The script creates an XML file,
       &lsquo;vagrantMachine.xml&rsquo;, containing
-      OpenAPI <code>docker</code> host XML. The module returns the
+      OpenAPI <code>vagrant</code> host XML. The module returns the
       &lsquo;vagrantMachine.xml&rsquo; as an <code>output</code>. The
       XML code for
       <a href="examples/simpleInputHost/createVagrant.xml">createVagrant.xml</a>
@@ -256,7 +256,7 @@ echo &quot;&lt;vagrant vagrantfile=\&quot;~/vagrant/precise32/Vagrantfile\&quot;
     input &lsquo;vagrantMachine.xml&rsquo;. The module has
     one <code>input</code>, &lsquo;vagrantMachine.xml&rsquo;. The
     script will be executed on the host machine passed in by this
-    input. The scritpt produces a list of random numbers, which is
+    input. The script produces a list of random numbers, which is
     returned as <code>output</code> &lsquo;x&rsquo;. The XML code for
     <a href="examples/simpleInputHost/normalList.xml">normalList.xml</a>
     follows:</p>
@@ -313,17 +313,19 @@ for i in range(len(x)):
 </pre></div>
 </div></div>
 
-    <p>The result of running &lsquo;simpleInputHost&rsquo; can be found
+    <p>The <code>vagrant</code> <code>host</code> XML created by the
+    &lsquo;createVagrant&rsquo; module can be found
+    at <a href="pipelines/simpleInputHost/createVagrant/vagrantMachine.xml">pipelines/simpleInputHost/createVagrant/vagrantMachine.xml</a>. The
+    result of running &lsquo;simpleInputHost&rsquo; can be found
     at <a href="simpleInputHost.tar.gz">simpleInputHost.tar.gz</a>.</p>
 
     <h2>Specifying module language version details</h2>
 
-    <p>In OpenAPI v0.3 the <code>language</code> attribute was added
-      to <code>module</code> elements with which a module author
-      specified the language of execution for a module's source
-      scripts
+    <p>In OpenAPI v0.3 a module author specifies the execution
+      language for a module's source scripts using
+      the <code>module</code> <code>language</code> attribute
       (<a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">OpenAPI
-      version 0.3</a>).  In OpenAPI v0.6 this attribute has been
+      version 0.3</a>). In OpenAPI v0.6 this attribute has been
       replaced with a <code>language</code> element. OpenAPI v0.6 also
       introduces attributes to the <code>language</code> element for
       specifying the language version required to execute a module's
@@ -331,11 +333,10 @@ for i in range(len(x)):
 
     <p>Each OpenAPI <code>module</code> must contain
       a <code>language</code> element as its first element. The value of the
-      <code>language</code> element should be the language with which
-      an OpenAPI glue system will execute the module's source
-      scripts. The following code demonstrates how a module author
-      indicates a module should be executed using the
-      &ldquo;python&rdquo; language:</p>
+      <code>language</code> element should be the language of
+      execution for module's source scripts. The following code
+      demonstrates how a module author indicates a module should be
+      executed using the &ldquo;python&rdquo; language:</p>
 
     <pre><code>&lt;module xmlns="http://www.openapi.org/2014/"&gt;
   &lt;language&gt;python&lt;/language&gt;
@@ -343,9 +344,9 @@ for i in range(len(x)):
 &lt;/module&gt;</code></pre>
 
     <p>A module author can now also specify the minimum and maximum
-    version of the language required using either or both the
-    <code>minVersion</code> and the <code>maxVersion</code>
-    attributes. These attributes should be provided with a version
+    version of the language required using either the
+    <code>minVersion</code> or the <code>maxVersion</code>
+    attribute, or both. These attributes should be provided with a version
     number string appropriate to the language named. The following
     code demonstrates how a module author can specify that a version of the
     &ldquo;R&rdquo; language between versions &ldquo;2.14.1&rdquo; and
@@ -357,7 +358,7 @@ for i in range(len(x)):
 &lt;/module&gt;</code></pre>
 
     <p>If a module author instead requires an exact version of a
-    language for script exection she can specify this using the new
+    language for script execution she can specify this using the new
     <code>version</code> attribute of the <code>language</code>
     element. The <code>version</code> attribute should be provided
     with a version number string appropriate to the language
@@ -398,13 +399,12 @@ for i in range(len(x)):
     in this report. This section describes how <code>module</code>
     <code>language</code> elements have been implemented in Conduit
     v0.6 to optionally provide a warning to the user when the language
-    used to execute a module does not meet the author's
+    used to execute a module does not meet the module author's
     requirements. Conduit will also record the exact version of a
     language used for module execution in its persistent module
     results. Finally, language version information has been used to
-    determine which of the two commonly installed version of the
-    &ldquo;python&rdquo; language is to be used for module
-    execuction.</p>
+    determine which of the two commonly installed versions of the
+    Python language is to be used for module execution.</p>
 
     <h3>Warning about language version violation</h3>
 
@@ -412,8 +412,8 @@ for i in range(len(x)):
     has been added to the <code>runModule()</code> function, used to
     execute a module. When this argument is passed the default value
     of <code>FALSE</code> the module will not behave any differently
-    than in previouse versions. However, when <code>warnVersion</code>
-    is set to <code>FALSE</code> Conduit will give a warning if any of
+    than in previous versions. However, when <code>warnVersion</code>
+    is set to <code>TRUE</code> Conduit will give a warning if any of
     a module's language version attributes are violated.</p>
 
     <p>The &lsquo;listOfThings&rsquo; module specifies that it is to
@@ -443,9 +443,10 @@ listOfThings &lt;- list(
 </div></div>
 
     <p>If this module is executed in a version of R other than 2.14.1
-      Conduit will give a warning. The following demonstrates the
-      &lsquo;listOfThings&rsquo; module being executed in an R version
-      other than 2.14.1:</p>
+      and the module is executed with <code>runModule(..., warnVersion
+      = TRUE)</code> Conduit will give a warning. The following
+      demonstrates the &lsquo;listOfThings&rsquo; module being
+      executed in an R version other than 2.14.1:</p>
 
 <div class="chunk" id="warnVersionTrue"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">listOfThings</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">loadModule</span><span class="hl std">(</span><span class="hl kwc">name</span> <span class="hl std">=</span> <span class="hl str">&quot;listOfThings&quot;</span><span class="hl std">,</span> <span class="hl kwc">ref</span> <span class="hl std">=</span> <span class="hl kwd">file.path</span><span class="hl std">(</span><span class="hl str">&quot;examples&quot;</span><span class="hl std">,</span>
     <span class="hl str">&quot;warnVersion&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;listOfThings.xml&quot;</span><span class="hl std">))</span>
@@ -500,9 +501,9 @@ listOfThings &lt;- list(
     this meant that Python v2.x would be used. From version 0.6
     Conduit will try to execute any module which specifies
     &ldquo;python&rdquo; as its language using Python v3.x via the
-    system command <code>/usr/bin/python3</code>. Versions 2.x and 3.x
+    system command <code>/usr/bin/python3</code>. Versions 2.x or 3.x
     of Python can be invoked by providing &ldquo;python2&rdquo; and
-    &ldquo;python3&rdquo; respectiveyl as a module's language.</p>
+    &ldquo;python3&rdquo; respectively as a module's language.</p>
 
     <p>In Conduit v0.6 the following two module XML examples will be
       executed using Python v3.x:</p>
@@ -528,11 +529,11 @@ listOfThings &lt;- list(
 
     <p>The introduction of module language version attributes allows
     another mechanism for controlling the version of Python used to
-    executed module source scripts. If a module author specifies that
+    execute module source scripts. If a module author specifies that
     a module's scripts should be executed using the
     &ldquo;python&rdquo; language with a <code>maxVersion</code> less
     than version &ldquo;3.0.0&rdquo; Conduit v0.6 will execute these
-    scripts as if the author has specified &ldquo;python2&rdquo; as
+    scripts as if the author had specified &ldquo;python2&rdquo; as
     the module language. The following module XML will be executed
     using Python v2.x in Conduit v0.6:</p>
 
@@ -541,8 +542,8 @@ listOfThings &lt;- list(
   ...
 &lt;/module&gt;</code></pre>
 
-    <p>Similarly, if a module author specifies a module requires an
-    exact version of &ldquo;python&rdquo; less then version
+    <p>Similarly, if a module author specifies that a module requires
+    an exact version of &ldquo;python&rdquo; less then version
     &ldquo;3.0.0&rdquo; using the <code>version</code> attribute
     Conduit v0.6 will execute this module's scripts as if
     &ldquo;python2&rdquo; had been specified. This will occur even if
@@ -560,8 +561,61 @@ listOfThings &lt;- list(
     Python executables at <code>/usr/bin/python2</code>
     and <code>/usr/bin/python3</code>. Most Linux distributions
     provide a method to install Python version 2.x and 3.x from their
-    software repositories, and mayne install one of both by
+    software repositories, and many install one of both by
     default.</p>
+
+    <h2>Technical requirements</h2>
+
+    <ul>
+      <li>The changes to OpenAPI version 0.6 described in this report
+	have been implemented in version 0.6 of
+	the <a href="https://github.com/anhinton/conduit/releases/tag/v0.6">Conduit</a>
+	package (Hinton &amp; Murrell, 2016), a prototype OpenAPI glue
+	system implemented in R.</li>
+      <li>Development and testing of Conduit v0.6, and the execution
+	of the examples in this report, were done on
+	an <a href="http://www.ubuntu.com/">Ubuntu 16.04 64-bit</a>
+	machine using <a href="https://www.r-project.org/">R version
+	  3.3.0</a>.</li>
+      <li>Vagrant module hosts were tested in Conduit v0.6
+	using <a href="https://vagrantup.com/">Vagrant v1.8.1</a>
+	and <a href="https://www.virtualbox.org/">VirtualBox
+	v5.0.18</a>.</li>
+    </ul>
+
+    <h2>Resources</h2>
+
+    <ul>
+      <li><a href="http://stattech.wordpress.fos.auckland.ac.nz/2015-01-introducing-openapi/">Introducing
+	  OpenAPI</a> (Hinton &amp; Murrell, 2015) describes the original
+	conception and design of the OpenAPI architecture.</li>
+      <li>Several design changes and new features in OpenAPI are
+	documented
+	in <a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-01-openapi-version-0-3/">OpenAPI
+	version 0.3</a> and
+	in <a href="http://stattech.wordpress.fos.auckland.ac.nz/2016-07-openapi-version-0-5/">OpenAPI
+	version 0.5</a> (both Hinton &amp; Murrell, 2016).</li>
+      <li>XML schema for version 0.6 of OpenAPI
+	are <a href="https://github.com/anhinton/openapiValidation/releases/tag/v0.6">available
+	  on Github</a>.</li>
+      <li>The &lsquo;simpleInputHost&rsquo; pipeline example in this
+	report uses the pipeline
+	file <a href="examples/simpleInputHost/pipeline.xml">simpleInputHost/pipeline.xml</a>,
+	and the module
+	files <a href="examples/simpleInputHost/createVagrant.xml">createVagrant.xml</a>
+	and <a href="examples/simpleInputHost/normalList.xml">normalList.xml</a>.</li>
+      <li>The &lsquo;listOfThings&rsquo; module example in this report
+      uses the module
+      file <a href="examples/warnVersion/listOfThings.xml">listOfThings.xml</a>.</li>
+      <li>This report was produced using
+	the <a href="http://yihui.name/knitr/">knitr</a> package in
+	R. The source document is available
+	at <a href="report.Rhtml">report.Rhtml</a>.</li>
+    </ul>
+
+    <hr>
+
+    <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">OpenAPI version 0.6</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Ashley Noel Hinton and Paul Murrell</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
     
   </body>
 </html>
